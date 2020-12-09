@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BeatCreator : MonoBehaviour
 {
+    [SerializeField] GameObject pauseNode;
+
     public int keyMode;
 
     public float bpm;
@@ -24,6 +28,7 @@ public class BeatCreator : MonoBehaviour
     public AudioClip bgmSound;
     public AudioSource bgmPlayer;
     TimingManager timingManager;
+    Result result;
 
     int beatCount = 0;
 
@@ -39,23 +44,20 @@ public class BeatCreator : MonoBehaviour
 
     bool isBgmPlay = false;
 
+    bool isPause = false;
+
     public void SetValues()
     {
         bgmPlayer = gameObject.AddComponent<AudioSource>();
         bgmPlayer.clip = bgmSound;
 
         timingManager = FindObjectOfType<TimingManager>();
+        result = FindObjectOfType<Result>();
 
         secondPerBar = 60.0f / bpm * 4f;                            // Bar 당 시간(초)
         secondPerBeat = 60.0f / bpm * 4f / beatPerBar;              // Beat 당 시간(초).
         samplePerBar = secondPerBar * bgmPlayer.clip.frequency;     // Bar 당 PCM 샘플.
         samplePerBeat = secondPerBeat * bgmPlayer.clip.frequency;   // Beat 당 PCM 샘플.
-
-        /*
-        foreach(Note note in noteObj_Line_1)
-        {
-            Debug.Log(note.channel + " " + note.noteTime);
-        }*/
     }
 
     void Update()
@@ -63,6 +65,31 @@ public class BeatCreator : MonoBehaviour
         if (isStart == true)
         {
             StartCoroutine(Create()); // 노트생성 코루틴 시작.
+
+        }
+
+        if (bgmPlayer.time >= 0 && bgmPlayer.isPlaying)
+        {
+            result.ShowResult();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPause)
+            {
+                Time.timeScale = 1;
+                isPause = false;
+                pauseNode.SetActive(false);
+                return;
+            }
+            else
+            {
+                Time.timeScale = 0;
+                isPause = true;
+                pauseNode.SetActive(true);
+                return;
+            }
+
         }
     }
 
@@ -101,8 +128,6 @@ public class BeatCreator : MonoBehaviour
             nextTime += secondPerBeat;
         }
 
-        //Debug.Log(Time.time + " "+ nextTime + " " + isBgmPlay);
-
         if (bgmPlayer.timeSamples >= nextSample && isBgmPlay == true)
         {
             if (noteObj_Line_1.Count > noteIndex_1)
@@ -127,8 +152,21 @@ public class BeatCreator : MonoBehaviour
 
             nextSample += samplePerBeat;
             beatCount++;
-            Debug.Log(bgmPlayer.timeSamples + " " + nextSample + " " + isBgmPlay);
         }
+    }
 
+    public void ContinueButton()
+    {
+        if (isPause)
+        {
+            Time.timeScale = 1;
+            isPause = false;
+            pauseNode.SetActive(false);
+        }
+    }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("Main");
     }
 }

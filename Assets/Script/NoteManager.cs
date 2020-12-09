@@ -5,32 +5,17 @@ using UnityEngine;
 public class NoteManager : MonoBehaviour
 {
     public int bpm = 0;
-    double currentTime = 0;
 
-    [SerializeField] Transform tfNoteAppear = null;
     TimingManager timingManager;
     EffectManager effect;
+    ScoreManager scoreManager;
 
     // Start is called before the first frame update
     void Start()
     {
         timingManager = GetComponent<TimingManager>();
         effect = FindObjectOfType<EffectManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        /*currentTime += Time.deltaTime;
-        if (currentTime >= 60d / bpm)
-        {
-            GameObject t_note = ObjectPool.instance.noteQueue.Dequeue();
-            t_note.transform.position = tfNoteAppear.position;
-            t_note.SetActive(true);
-            timingManager.boxNoteList.Add(t_note);
-
-            currentTime -= 60d / bpm;
-        }*/
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -40,11 +25,11 @@ public class NoteManager : MonoBehaviour
             if (collision.GetComponent<Note>().GetNoteFlag())
             {
                 effect.JudgementEffect(3);
+                scoreManager.IncreaseScore(3);
             }
 
             timingManager.boxNoteList.Remove(collision.gameObject);
-
-            //ObjectPool.instance.noteQueue.Enqueue(collision.gameObject);
+            
             collision.gameObject.SetActive(false);
         }
     }

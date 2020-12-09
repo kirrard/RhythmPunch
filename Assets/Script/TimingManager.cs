@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TimingManager : MonoBehaviour
@@ -11,10 +10,12 @@ public class TimingManager : MonoBehaviour
     Vector2[] timingBoxs = null;
 
     EffectManager effect;
+    ScoreManager scoreManager;
 
     void Start()
     {
         effect = FindObjectOfType<EffectManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
 
         timingBoxs = new Vector2[timingRect.Length];
 
@@ -41,6 +42,7 @@ public class TimingManager : MonoBehaviour
                     }
 
                     effect.JudgementEffect(x);
+                    scoreManager.IncreaseScore(x);
                     boxNoteList[i].GetComponent<Animator>().SetTrigger("Hit");
                     boxNoteList[i].GetComponent<AudioSource>().Play();
 

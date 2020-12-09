@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
 
     public string bmsName = "emergency2";
 
-    // Use this for initialization
     IEnumerator Start()
     {
         beatCreator = FindObjectOfType<BeatCreator>();
@@ -86,11 +85,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        /*
-        foreach (Note note in noteObj_Line_1)
-        {
-            Debug.Log(note.noteTime);
-        }*/
+
         noteObj_Line_1.Sort(delegate (Note a, Note b) {
             return a.noteTime.CompareTo(b.noteTime);
         });

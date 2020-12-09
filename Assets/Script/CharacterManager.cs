@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -15,12 +13,12 @@ public class CharacterManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.D)|| Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K))
         {
             animator.SetBool("Hit", true);
             timingManager.CheckTiming();
         }
-        else if(Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.F))
+        else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.J) || Input.GetKeyUp(KeyCode.K))
         {
             animator.SetBool("Hit", false);
         }
