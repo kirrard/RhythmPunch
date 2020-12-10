@@ -80,6 +80,7 @@ public class BeatCreator : MonoBehaviour
                 Time.timeScale = 1;
                 isPause = false;
                 pauseNode.SetActive(false);
+                bgmPlayer.Play();
                 return;
             }
             else
@@ -87,6 +88,7 @@ public class BeatCreator : MonoBehaviour
                 Time.timeScale = 0;
                 isPause = true;
                 pauseNode.SetActive(true);
+                bgmPlayer.Pause();
                 return;
             }
 
@@ -162,6 +164,7 @@ public class BeatCreator : MonoBehaviour
             Time.timeScale = 1;
             isPause = false;
             pauseNode.SetActive(false);
+            bgmPlayer.Play();
         }
     }
 

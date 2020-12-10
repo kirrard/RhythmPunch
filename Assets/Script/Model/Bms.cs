@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class Bms : MonoBehaviour
@@ -35,17 +34,5 @@ public class Bms : MonoBehaviour
     public void SumTotalNoteCount()
     {
         totalNoteCount++;
-    }
-
-    // debug
-    public void Debug()
-    {
-        print("title = " + title);
-        print("artist = " + artist);
-        print("bpm = " + bpm);
-        print("long note type = " + lnType);
-        print("total bar Count = " + barDataList.Count);
-        print("total note Count = " + totalNoteCount);
-        print("total play time = " + totalPlayTime);
     }
 }
